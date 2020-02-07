@@ -33,7 +33,7 @@ import skfda
 #
 # The extrapolation could be specified by a string with the short name of an
 # extrapolator or with an
-# :class:´~skfda.representation.extrapolation.Extrapolator´.
+# :class:`~skfda.representation.extrapolation.Extrapolator`.
 #
 # To show how it works we will create a dataset with two unidimensional curves
 # defined in (0,1), and we will represent it using a grid and different types
@@ -63,9 +63,6 @@ fd_bspline.plot(ax[1][1])
 # Disable xticks of first row
 ax[0][0].set_xticks([])
 ax[0][1].set_xticks([])
-
-# Clear title for next plots
-fdgrid.dataset_label = ""
 
 
 ##############################################################################
@@ -111,7 +108,8 @@ fd_bspline.plot(ax[1][1])
 ##############################################################################
 #
 # Periodic extrapolation will extend the domain range periodically.
-# The following example shows the periodical extension of an FDataGrid.
+# The following example shows the periodical extension of an 
+# :class:`~skfda.representation.grid.FDataGrid`.
 #
 # It should be noted that the Fourier basis is periodic in itself, but the
 # period does not have to coincide with the domain range, obtaining different
@@ -210,6 +208,7 @@ Z = np.exp(-0.5 * (X**2 + Y**2))
 
 # Creation of FDataGrid
 fd_surface = skfda.FDataGrid([Z], (t, t))
+fd_surface.dataset_label = 'Periodic extrapolation'
 
 t = np.arange(-7, 7.5, 0.5)
 
@@ -219,7 +218,7 @@ T, S = np.meshgrid(t, t)
 
 
 ax.plot_wireframe(T, S, values[0], alpha=.3, color="C0")
-ax.plot_surface(X, Y, Z, color="C0")
+fd_surface.plot(fig=fig, color="C0")
 
 ###############################################################################
 #
@@ -229,10 +228,12 @@ ax.plot_surface(X, Y, Z, color="C0")
 
 values = fd_surface((t, t), grid=True, extrapolation="bounds")
 
+fd_surface.dataset_label = 'Bounds extrapolation'
+
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_wireframe(T, S, values[0], alpha=.3, color="C0")
-ax.plot_surface(X, Y, Z, color="C0")
+fd_surface.plot(fig=fig, color="C0")
 
 ###############################################################################
 #
@@ -241,7 +242,9 @@ ax.plot_surface(X, Y, Z, color="C0")
 
 values = fd_surface((t, t), grid=True, extrapolation="zeros")
 
+fd_surface.dataset_label = 'Zeros extrapolation'
+
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_wireframe(T, S, values[0], alpha=.3, color="C0")
-ax.plot_surface(X, Y, Z, color="C0")
+fd_surface.plot(fig=fig, color="C0")
