@@ -193,7 +193,10 @@ def _set_labels(fdata, fig=None, axes=None, patches=None):
 
     # Dataset name
     if fdata.dataset_label is not None:
-        fig.suptitle(fdata.dataset_label)
+        if fdata.dim_codomain > 1:
+            fig.suptitle(fdata.dataset_label)
+        else:
+            axes[0].set_title(fdata.dataset_label)
 
     # Legend
     if patches is not None:
